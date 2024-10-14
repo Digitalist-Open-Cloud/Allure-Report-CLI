@@ -19,7 +19,13 @@ force_project_creation = FORCE_PROJECT_CREATION
 
 def prepare_results_files(results_directory):
     """preparing files."""
-    files = os.listdir(results_directory)
+    # Get the current working directory
+    current_directory = os.getcwd()
+    results_directory_path = os.path.join(current_directory, results_directory)
+    if not os.path.exists(results_directory_path):
+        logger.error("Directory does not exist: %s", results_directory_path)
+        return []
+    files = os.listdir(results_directory_path)
     results = []
 
     logger.info("Files in directory:")

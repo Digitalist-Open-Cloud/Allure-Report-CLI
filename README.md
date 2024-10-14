@@ -1,6 +1,10 @@
 # Readme
 
-This is CLI tool for handling Allure reports, mainly targeting the docker builds released by [fescobar](https://github.com/fescobar), but should work with other setups of Allure Report.
+This is CLI tool for handling Allure reports, mainly targeting the docker builds released by [fescobar](https://github.com/fescobar), but should work with other setups of Allure Report. If using something else than fescobar docker images, make sure you set the environment variable `ALLURE_API_ENDPOINT` to the correct endpoint for the api calls.
+
+## Usage
+
+
 
 ## Environment variables
 
