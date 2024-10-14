@@ -22,7 +22,7 @@ def prepare_results_files(results_directory):
     files = os.listdir(results_directory)
     results = []
 
-    logger.info("FILES in directory:")
+    logger.info("Files in directory:")
     for file in files:
         result = {}
         file_path = os.path.join(results_directory, file)
@@ -127,7 +127,7 @@ def send_results(
     """
     current_directory = os.path.dirname(os.path.realpath(__file__))
     results_directory = os.path.join(current_directory, allure_results_directory)
-    click.echo(f"Results directory path: {results_directory}")
+    logger.debug("Results directory path: %s", {results_directory})
 
     # Prepare files
     results = prepare_results_files(results_directory)
@@ -142,6 +142,7 @@ def send_results(
     headers = {"Content-type": "application/json", "X-CSRF-TOKEN": csrf_access_token}
     request_body = {"results": results}
     json_request_body = json.dumps(request_body)
+
     url = f"{allure_server}/{API_ENDPOINT}/send-results?project_id={project_id}&force_project_creation={force_project_creation}"
     response = api_request(
         session,
@@ -367,15 +368,18 @@ def delete_project(allure_server, user, password, project_id, ssl_verification):
         verify=ssl_verification,
     )
 
-    click.echo(f"STATUS CODE: {response.status_code}")
-    click.echo("RESPONSE:")
+    logger.debug("Status code: %s", {response.status_code})
+    logger.debug("Response:")
     json_response_body = json.loads(response.content)
-    click.echo(json.dumps(json_response_body, indent=4, sort_keys=True))
+    json_dump = json.dumps(json_response_body, indent=4, sort_keys=True)
+    logger.info(json_dump)
 
 
 @click.group()
 def cli():
-    pass
+    """
+    Define cli
+    """
 
 
 cli.add_command(send_results)
