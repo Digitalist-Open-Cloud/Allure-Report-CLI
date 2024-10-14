@@ -4,6 +4,7 @@ import os
 import base64
 import json
 import logging
+from pathlib import Path
 import requests
 import click
 
@@ -20,7 +21,8 @@ force_project_creation = FORCE_PROJECT_CREATION
 def prepare_results_files(results_directory):
     """preparing files."""
     # Get the current working directory
-    current_directory = os.getcwd()
+    current_directory = Path.cwd()
+    logger.info("Path we are looking for files in: %s", current_directory)
     results_directory_path = os.path.join(current_directory, results_directory)
     if not os.path.exists(results_directory_path):
         logger.error("Directory does not exist: %s", results_directory_path)
